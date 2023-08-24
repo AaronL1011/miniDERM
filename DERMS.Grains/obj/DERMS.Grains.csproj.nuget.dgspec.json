@@ -1,0 +1,214 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/aaron/code/DERMS/DERMS.Grains/DERMS.Grains.csproj": {}
+  },
+  "projects": {
+    "/home/aaron/code/DERMS/DERMS.Dto/DERMS.Dto.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/aaron/code/DERMS/DERMS.Dto/DERMS.Dto.csproj",
+        "projectName": "DERMS.Dto",
+        "projectPath": "/home/aaron/code/DERMS/DERMS.Dto/DERMS.Dto.csproj",
+        "packagesPath": "/home/aaron/.nuget/packages/",
+        "outputPath": "/home/aaron/code/DERMS/DERMS.Dto/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/aaron/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.Orleans.Sdk": {
+              "target": "Package",
+              "version": "[7.2.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[7.0.10, 7.0.10]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.110/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/aaron/code/DERMS/DERMS.Grains/DERMS.Grains.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/aaron/code/DERMS/DERMS.Grains/DERMS.Grains.csproj",
+        "projectName": "DERMS.Grains",
+        "projectPath": "/home/aaron/code/DERMS/DERMS.Grains/DERMS.Grains.csproj",
+        "packagesPath": "/home/aaron/.nuget/packages/",
+        "outputPath": "/home/aaron/code/DERMS/DERMS.Grains/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/aaron/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "/home/aaron/code/DERMS/DERMS.Dto/DERMS.Dto.csproj": {
+                "projectPath": "/home/aaron/code/DERMS/DERMS.Dto/DERMS.Dto.csproj"
+              },
+              "/home/aaron/code/DERMS/DERMS.Interfaces/DERMS.Interfaces.csproj": {
+                "projectPath": "/home/aaron/code/DERMS/DERMS.Interfaces/DERMS.Interfaces.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.Orleans.Sdk": {
+              "target": "Package",
+              "version": "[7.2.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[7.0.10, 7.0.10]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.110/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/aaron/code/DERMS/DERMS.Interfaces/DERMS.Interfaces.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/aaron/code/DERMS/DERMS.Interfaces/DERMS.Interfaces.csproj",
+        "projectName": "DERMS.Interfaces",
+        "projectPath": "/home/aaron/code/DERMS/DERMS.Interfaces/DERMS.Interfaces.csproj",
+        "packagesPath": "/home/aaron/.nuget/packages/",
+        "outputPath": "/home/aaron/code/DERMS/DERMS.Interfaces/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/aaron/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "/home/aaron/code/DERMS/DERMS.Dto/DERMS.Dto.csproj": {
+                "projectPath": "/home/aaron/code/DERMS/DERMS.Dto/DERMS.Dto.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.Orleans.Sdk": {
+              "target": "Package",
+              "version": "[7.2.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[7.0.10, 7.0.10]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.110/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

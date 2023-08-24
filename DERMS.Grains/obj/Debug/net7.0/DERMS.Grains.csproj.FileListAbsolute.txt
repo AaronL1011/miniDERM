@@ -1,0 +1,17 @@
+/home/aaron/code/DERMS/DERMS.Grains/bin/Debug/net7.0/DERMS.Grains.deps.json
+/home/aaron/code/DERMS/DERMS.Grains/bin/Debug/net7.0/DERMS.Grains.dll
+/home/aaron/code/DERMS/DERMS.Grains/bin/Debug/net7.0/DERMS.Grains.pdb
+/home/aaron/code/DERMS/DERMS.Grains/bin/Debug/net7.0/DERMS.Interfaces.dll
+/home/aaron/code/DERMS/DERMS.Grains/bin/Debug/net7.0/DERMS.Interfaces.pdb
+/home/aaron/code/DERMS/DERMS.Grains/obj/Debug/net7.0/DERMS.Grains.csproj.AssemblyReference.cache
+/home/aaron/code/DERMS/DERMS.Grains/obj/Debug/net7.0/DERMS.Grains.GeneratedMSBuildEditorConfig.editorconfig
+/home/aaron/code/DERMS/DERMS.Grains/obj/Debug/net7.0/DERMS.Grains.AssemblyInfoInputs.cache
+/home/aaron/code/DERMS/DERMS.Grains/obj/Debug/net7.0/DERMS.Grains.AssemblyInfo.cs
+/home/aaron/code/DERMS/DERMS.Grains/obj/Debug/net7.0/DERMS.Grains.csproj.CoreCompileInputs.cache
+/home/aaron/code/DERMS/DERMS.Grains/obj/Debug/net7.0/DERMS.Grains.csproj.CopyComplete
+/home/aaron/code/DERMS/DERMS.Grains/obj/Debug/net7.0/DERMS.Grains.dll
+/home/aaron/code/DERMS/DERMS.Grains/obj/Debug/net7.0/refint/DERMS.Grains.dll
+/home/aaron/code/DERMS/DERMS.Grains/obj/Debug/net7.0/DERMS.Grains.pdb
+/home/aaron/code/DERMS/DERMS.Grains/obj/Debug/net7.0/ref/DERMS.Grains.dll
+/home/aaron/code/DERMS/DERMS.Grains/bin/Debug/net7.0/DERMS.Dto.dll
+/home/aaron/code/DERMS/DERMS.Grains/bin/Debug/net7.0/DERMS.Dto.pdb

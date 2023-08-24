@@ -1,0 +1,12 @@
+/home/aaron/code/DERMS/DERMS.Dto/bin/Debug/net7.0/DERMS.Dto.deps.json
+/home/aaron/code/DERMS/DERMS.Dto/bin/Debug/net7.0/DERMS.Dto.dll
+/home/aaron/code/DERMS/DERMS.Dto/bin/Debug/net7.0/DERMS.Dto.pdb
+/home/aaron/code/DERMS/DERMS.Dto/obj/Debug/net7.0/DERMS.Dto.csproj.AssemblyReference.cache
+/home/aaron/code/DERMS/DERMS.Dto/obj/Debug/net7.0/DERMS.Dto.GeneratedMSBuildEditorConfig.editorconfig
+/home/aaron/code/DERMS/DERMS.Dto/obj/Debug/net7.0/DERMS.Dto.AssemblyInfoInputs.cache
+/home/aaron/code/DERMS/DERMS.Dto/obj/Debug/net7.0/DERMS.Dto.AssemblyInfo.cs
+/home/aaron/code/DERMS/DERMS.Dto/obj/Debug/net7.0/DERMS.Dto.csproj.CoreCompileInputs.cache
+/home/aaron/code/DERMS/DERMS.Dto/obj/Debug/net7.0/DERMS.Dto.dll
+/home/aaron/code/DERMS/DERMS.Dto/obj/Debug/net7.0/refint/DERMS.Dto.dll
+/home/aaron/code/DERMS/DERMS.Dto/obj/Debug/net7.0/DERMS.Dto.pdb
+/home/aaron/code/DERMS/DERMS.Dto/obj/Debug/net7.0/ref/DERMS.Dto.dll

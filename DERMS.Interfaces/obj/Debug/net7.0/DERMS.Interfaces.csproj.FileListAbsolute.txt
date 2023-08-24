@@ -1,0 +1,15 @@
+/home/aaron/code/DERMS/DERMS.Interfaces/bin/Debug/net7.0/DERMS.Interfaces.deps.json
+/home/aaron/code/DERMS/DERMS.Interfaces/bin/Debug/net7.0/DERMS.Interfaces.dll
+/home/aaron/code/DERMS/DERMS.Interfaces/bin/Debug/net7.0/DERMS.Interfaces.pdb
+/home/aaron/code/DERMS/DERMS.Interfaces/obj/Debug/net7.0/DERMS.Interfaces.csproj.AssemblyReference.cache
+/home/aaron/code/DERMS/DERMS.Interfaces/obj/Debug/net7.0/DERMS.Interfaces.GeneratedMSBuildEditorConfig.editorconfig
+/home/aaron/code/DERMS/DERMS.Interfaces/obj/Debug/net7.0/DERMS.Interfaces.AssemblyInfoInputs.cache
+/home/aaron/code/DERMS/DERMS.Interfaces/obj/Debug/net7.0/DERMS.Interfaces.AssemblyInfo.cs
+/home/aaron/code/DERMS/DERMS.Interfaces/obj/Debug/net7.0/DERMS.Interfaces.csproj.CoreCompileInputs.cache
+/home/aaron/code/DERMS/DERMS.Interfaces/obj/Debug/net7.0/DERMS.Interfaces.dll
+/home/aaron/code/DERMS/DERMS.Interfaces/obj/Debug/net7.0/refint/DERMS.Interfaces.dll
+/home/aaron/code/DERMS/DERMS.Interfaces/obj/Debug/net7.0/DERMS.Interfaces.pdb
+/home/aaron/code/DERMS/DERMS.Interfaces/obj/Debug/net7.0/ref/DERMS.Interfaces.dll
+/home/aaron/code/DERMS/DERMS.Interfaces/bin/Debug/net7.0/DERMS.Dto.dll
+/home/aaron/code/DERMS/DERMS.Interfaces/bin/Debug/net7.0/DERMS.Dto.pdb
+/home/aaron/code/DERMS/DERMS.Interfaces/obj/Debug/net7.0/DERMS.Interfaces.csproj.CopyComplete

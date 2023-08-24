@@ -18,7 +18,7 @@ public class UserController : ControllerBase
         _grains = grains;
     }
 
-    [HttpGet("{username}")]
+    [HttpGet("getResources/{username}")]
     public async Task<IActionResult> GetAllUserResourceInfo(string username)
     {
         var userGrain = _grains.GetGrain<IUserGrain>(username);
@@ -27,12 +27,12 @@ public class UserController : ControllerBase
             return BadRequest("Unable to get User");
         }
 
-        var resourceInfos = await userGrain.GetEnergyResourceNames();
+        var resources = await userGrain.GetEnergyResourceInfo();
 
-        return Ok(JsonSerializer.Serialize(resourceInfos));
+        return Ok(JsonSerializer.Serialize(resources));
     }
 
-    [HttpPost("{username}")]
+    [HttpPost("create/{username}")]
     public async Task<IActionResult> CreateEnergyResource([FromBody] CreateEnergyResource request, string username)
     {
         var userGrain = _grains.GetGrain<IUserGrain>(username);
@@ -55,5 +55,101 @@ public class UserController : ControllerBase
         return Ok();
     }
 
+    [HttpDelete("{username}")]
+    public async Task<IActionResult> DeleteEnergyResource([FromBody] DeleteEnergyResource request, string username)
+    {
+        if (!Guid.TryParse(request.Id, out var resourceId))
+        {
+            return BadRequest("Invalid resource Id");
+        }
+
+        var userGrain = _grains.GetGrain<IUserGrain>(username);
+        if (userGrain == null)
+        {
+            return BadRequest("Failed to get User");
+        }
+
+        await userGrain.RemoveEnergyResource(resourceId);
+        
+        return Ok();
+    }
+
+    [HttpPost]
+    [Route("connect/{username}")]
+    public async Task<IActionResult> ConnectToGrid([FromBody] ConnectToGrid request, string username)
+    {
+        if (!Guid.TryParse(request.Id, out var resourceId))
+        {
+            return BadRequest("Invalid resource Id");
+        }
+
+        var userGrain = _grains.GetGrain<IUserGrain>(username);
+        if (userGrain == null)
+        {
+            return BadRequest("Failed to get User");
+        }
+
+        var resourceGrain = await userGrain.GetEnergyResource(resourceId);
+        if (resourceGrain == null)
+        {
+            return BadRequest("Failed to get Energy Resource");
+        }
+
+        await resourceGrain.ConnectToGrid();
+        
+        return Ok();
+    }
+
+    [HttpPost]
+    [Route("disconnect/{username}")]
+    public async Task<IActionResult> DisconnectFromGrid([FromBody] DisconnectFromGrid request, string username)
+    {
+        if (!Guid.TryParse(request.Id, out var resourceId))
+        {
+            return BadRequest("Invalid resource Id");
+        }
+        
+        var userGrain = _grains.GetGrain<IUserGrain>(username);
+        if (userGrain == null)
+        {
+            return BadRequest("Failed to get User");
+        }
+
+        var resourceGrain = await userGrain.GetEnergyResource(resourceId);
+        if (resourceGrain == null)
+        {
+            return BadRequest("Failed to get Energy Resource");
+        }
+
+        await resourceGrain.DisconnectFromGrid();
+        
+        return Ok();
+    }
+
+    [HttpPost]
+    [Route("setOutput/{username}")]
+    public async Task<IActionResult> SetEnergyResourceOutput([FromBody] SetEnergyResourceOutput request, string username)
+    {
+        if (!Guid.TryParse(request.Id, out var resourceId))
+        {
+            return BadRequest("Invalid resource Id");
+        }
+        
+        var userGrain = _grains.GetGrain<IUserGrain>(username);
+        if (userGrain == null)
+        {
+            return BadRequest("Failed to get User");
+        }
+
+        var resourceGrain = await userGrain.GetEnergyResource(resourceId);
+        if (resourceGrain == null)
+        {
+            return BadRequest("Failed to get Energy Resource");
+        }
+
+        await resourceGrain.SetEnergyOutput(request.EnergyOutput);
+        
+        return Ok();
+    }
 
 }

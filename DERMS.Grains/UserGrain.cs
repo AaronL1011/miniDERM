@@ -32,7 +32,7 @@ public class UserGrain : Grain, IUserGrain
             return Task.FromResult(_resources.Count);
         }
 
-        public Task<List<ResourceInfo>> GetEnergyResourceNames()
+        public Task<List<ResourceInfo>> GetEnergyResourceInfo()
         {
             var resourceList = _resources.Select(r =>
             {

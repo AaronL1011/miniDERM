@@ -12,7 +12,7 @@ namespace DERMS.Interfaces
         Task ConnectToGrid();
         Task DisconnectFromGrid();
         Task<bool> IsConnectedToGrid();
-        Task SetOwner(string username);
+        Task SetOwner(string operatorName);
         Task<string> GetOwner();
         Task SetName(string name);
         Task<string> GetName();

@@ -3,7 +3,7 @@ using DERMS.Interfaces;
 using DERMS.Dto;
 
 namespace DERMS.Grains;
-public class UserGrain : Grain, IUserGrain
+public class OperatorGrain : Grain, IOperatorGrain
     {
         private readonly Dictionary<Guid, IEnergyResourceGrain> _resources = new();
 

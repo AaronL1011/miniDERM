@@ -56,9 +56,9 @@ namespace DERMS.Grains
             return Task.FromResult(_isConnectedToGrid);
         }
 
-        public Task SetOwner(string username)
+        public Task SetOwner(string operatorName)
         {
-            _owner = username;
+            _owner = operatorName;
             return Task.CompletedTask;
         }
 

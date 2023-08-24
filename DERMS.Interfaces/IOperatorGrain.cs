@@ -2,7 +2,7 @@
 using DERMS.Dto;
 
 namespace DERMS.Interfaces;
-public interface IUserGrain : IGrainWithStringKey
+public interface IOperatorGrain : IGrainWithStringKey
 {
     Task<Guid> AddEnergyResource();
     Task RemoveEnergyResource(Guid resourceId);

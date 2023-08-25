@@ -2,7 +2,7 @@ import axios from 'axios';
 import type { CreateEnergyResource, SetEnergyOutput } from './types';
 
 const operatorApi = axios.create({
-  baseURL: 'http://127.0.0.1:8080/Operator',
+  baseURL: 'http://localhost:6001/Operator',
   headers: {
     "Content-Type": "application/json"
   }

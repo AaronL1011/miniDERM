@@ -6,7 +6,7 @@
   import { onMount } from "svelte";
 
   onMount(() => {
-    const socket = new WebSocket(`ws://localhost:8080/Operator/${$session.operatorName}/ws`);
+    const socket = new WebSocket(`ws://localhost:6001/Operator/${$session.operatorName}/ws`);
 
     socket.addEventListener("message", (event) => {
       const newState = JSON.parse(event.data) as EnergyResourcesInfo;

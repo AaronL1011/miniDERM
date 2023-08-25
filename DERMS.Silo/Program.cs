@@ -1,9 +1,11 @@
-using System.Net.WebSockets;
+using System.Net;
 using Orleans.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.WebHost.UseUrls("http://localhost:8080");
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Listen(IPAddress.Any, 6001); // Listen on port 6001 for HTTP
+});
 
 // Add services to the container.
 builder.Host.UseOrleans(siloBuilder =>
@@ -34,16 +36,15 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 app.UseCors();
 
+
+app.UseStaticFiles();
+app.UseDefaultFiles();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
-
-if (app.Environment.IsProduction())
-{
-    app.UseHttpsRedirection();
 }
 
 app.UseAuthorization();

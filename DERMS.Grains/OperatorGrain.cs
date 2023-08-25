@@ -15,10 +15,11 @@ public class OperatorGrain : Grain, IOperatorGrain
             return Task.FromResult(resourceId);
         }
 
-        public Task RemoveEnergyResource(Guid resourceId)
+        public async Task RemoveEnergyResource(Guid resourceId)
         {
+            var resource = GrainFactory.GetGrain<IEnergyResourceGrain>(resourceId);
+            await resource.DisconnectFromGrid();
             _resources.Remove(resourceId);
-            return Task.CompletedTask;
         }
 
         public Task<IEnergyResourceGrain?> GetEnergyResource(Guid resourceId)
@@ -32,27 +33,17 @@ public class OperatorGrain : Grain, IOperatorGrain
             return Task.FromResult(_resources.Count);
         }
 
-        public Task<List<ResourceInfo>> GetEnergyResourceInfo()
+        public async Task<ResourceInfo[]> GetEnergyResourceInfo()
         {
-            var resourceList = _resources.Select(r =>
+            var resourceInfos = _resources.Select(async r =>
             {
-                var resource = r.Value;
-                return new ResourceInfo()
-                {
-                    Id = r.Key.ToString(),
-                    Name = resource.GetName().GetAwaiter().GetResult(),
-                    EnergyOutput = resource.GetEnergyOutput().GetAwaiter().GetResult(),
-                    Status = resource.GetStatus().GetAwaiter().GetResult(),
-                    IsConnectedToGrid = resource.IsConnectedToGrid().GetAwaiter().GetResult(),
-                    Owner = resource.GetOwner().GetAwaiter().GetResult(),
-                };
+                var resource = await r.Value.ToDTO();
+                resource.Id = r.Key.ToString();
+                return resource;
             }).ToList();
 
-            if (resourceList == null) {
-                var emptyList = new List<ResourceInfo>();
-                return Task.FromResult(emptyList);
-            }
+            var resourceList = await Task.WhenAll(resourceInfos);
 
-            return Task.FromResult(resourceList);
+            return resourceList;
         }
     }

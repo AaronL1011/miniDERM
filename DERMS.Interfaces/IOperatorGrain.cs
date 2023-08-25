@@ -8,5 +8,5 @@ public interface IOperatorGrain : IGrainWithStringKey
     Task RemoveEnergyResource(Guid resourceId);
     Task<IEnergyResourceGrain?> GetEnergyResource(Guid resourceId);
     Task<int> GetEnergyResourceCount();
-    Task<List<ResourceInfo>> GetEnergyResourceInfo();
+    Task<ResourceInfo[]> GetEnergyResourceInfo();
 }

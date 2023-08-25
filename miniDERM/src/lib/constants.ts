@@ -1,0 +1,1 @@
+export const DEFAULT_OPERATOR_NAME = "Default_Operator"

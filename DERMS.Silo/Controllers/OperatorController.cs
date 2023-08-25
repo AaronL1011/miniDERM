@@ -2,6 +2,8 @@ using DERMS.Interfaces;
 using DERMS.Dto;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using System.Net.WebSockets;
+using System.Text;
 
 namespace DERMS.Silo.Controllers;
 
@@ -16,6 +18,21 @@ public class OperatorController : ControllerBase
     {
         _logger = logger;
         _grains = grains;
+    }
+
+    [HttpGet("{operatorName}/ws")]
+    public async Task WebSocketEndpoint(string operatorName)
+    {
+            _logger.LogInformation($"WebSocket request received for username: {operatorName}");
+        if (HttpContext.WebSockets.IsWebSocketRequest)
+        {
+            using var webSocket = await HttpContext.WebSockets.AcceptWebSocketAsync();
+            await SendEnergyResourceInfo(webSocket, operatorName);
+        }
+        else
+        {
+            HttpContext.Response.StatusCode = 420;
+        }
     }
 
     [HttpGet("{operatorName}/getResources")]
@@ -51,6 +68,7 @@ public class OperatorController : ControllerBase
         await resourceGrain.SetOwner(operatorName);
         await resourceGrain.SetName(request.Name);
         await resourceGrain.SetEnergyOutput(request.EnergyOutput);
+        await resourceGrain.Activate();
         
         return Ok();
     }
@@ -152,4 +170,47 @@ public class OperatorController : ControllerBase
         return Ok();
     }
 
+    private async Task SendEnergyResourceInfo(WebSocket webSocket, string operatorId)
+    {
+        var operatorGrain = _grains.GetGrain<IOperatorGrain>(operatorId);
+
+        while (webSocket.State == WebSocketState.Open)
+        {
+            var resources = await operatorGrain.GetEnergyResourceInfo();
+
+            var resourceInfo = new EnergyResourceInfo()
+            {
+                Resources = resources,
+                CurrentOutput = GetCurrentOutput(resources),
+                TotalGeneration = GetTotalGeneration(resources)
+            };
+            var jsonString = JsonSerializer.Serialize(resourceInfo);
+            var buffer = Encoding.UTF8.GetBytes(jsonString);
+
+            await webSocket.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Text, true, CancellationToken.None);
+
+            // Wait for 5 seconds before sending the next update
+            await Task.Delay(TimeSpan.FromSeconds(5));
+        }
+    }
+
+    private double GetCurrentOutput(ResourceInfo[] resources)
+    {
+        var total = resources.Aggregate(0.0, (sum, current) => {
+            var currentResourceOutput = (current.EnergyOutput / 100) * current.EnergyGeneration;
+            sum += currentResourceOutput;
+            return sum;
+        });
+
+        return Math.Round(total, 2);
+    }
+    private double GetTotalGeneration(ResourceInfo[] resources)
+    {
+        var total = resources.Aggregate(0.0, (sum, current) => {
+            sum += current.EnergyGeneration;
+            return sum;
+        });
+
+        return Math.Round(total, 2);
+    }
 }

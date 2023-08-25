@@ -17,5 +17,7 @@ namespace DERMS.Dto
         public bool IsConnectedToGrid { get; set; }
         [Id(5)]
         public string Owner { get; set; } = String.Empty;
+        [Id(6)]
+        public double EnergyGeneration { get; set; } = 0;
     }
 }

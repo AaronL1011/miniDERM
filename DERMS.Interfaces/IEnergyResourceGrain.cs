@@ -1,4 +1,4 @@
-using Orleans;
+using DERMS.Dto;
 
 namespace DERMS.Interfaces
 {
@@ -9,6 +9,7 @@ namespace DERMS.Interfaces
         Task<string> GetStatus();
         Task SetEnergyOutput(double output);
         Task<double> GetEnergyOutput();
+        Task<double> GetEnergyGeneration();
         Task ConnectToGrid();
         Task DisconnectFromGrid();
         Task<bool> IsConnectedToGrid();
@@ -16,5 +17,6 @@ namespace DERMS.Interfaces
         Task<string> GetOwner();
         Task SetName(string name);
         Task<string> GetName();
+        Task<ResourceInfo> ToDTO();
     }
 }

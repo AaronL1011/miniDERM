@@ -9,4 +9,5 @@ public interface IOperatorGrain : IGrainWithStringKey
     Task<IEnergyResourceGrain?> GetEnergyResource(Guid resourceId);
     Task<int> GetEnergyResourceCount();
     Task<ResourceInfo[]> GetEnergyResourceInfo();
+    Task<EnergyTimestamp[]> GetEnergyHistory();
 }

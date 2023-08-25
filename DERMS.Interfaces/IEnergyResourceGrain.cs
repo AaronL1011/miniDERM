@@ -10,6 +10,7 @@ namespace DERMS.Interfaces
         Task SetEnergyOutput(double output);
         Task<double> GetEnergyOutput();
         Task<double> GetEnergyGeneration();
+        Task<EnergyTimestamp[]> GetEnergyGenerationHistory();
         Task ConnectToGrid();
         Task DisconnectFromGrid();
         Task<bool> IsConnectedToGrid();

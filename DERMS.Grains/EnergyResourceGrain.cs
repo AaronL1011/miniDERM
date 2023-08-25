@@ -6,6 +6,7 @@ namespace DERMS.Grains
 {
     public class EnergyResourceGrain : Grain, IEnergyResourceGrain
     {
+        const int MaxHistorySize = 51;
         private bool _isActive;
         private bool _isConnectedToGrid;
         private double _energyOutput;
@@ -13,6 +14,7 @@ namespace DERMS.Grains
         private System.Timers.Timer? _energyFluctuationTimer;
         private string _owner = String.Empty;
         private string _name = String.Empty;
+        private readonly Queue<EnergyTimestamp> _generationHistory = new Queue<EnergyTimestamp>(MaxHistorySize);
 
         public Task Activate()
         {
@@ -105,9 +107,26 @@ namespace DERMS.Grains
             });
         }
 
+        public Task<EnergyTimestamp[]> GetEnergyGenerationHistory()
+        {
+            var history = _generationHistory.ToArray();
+            return Task.FromResult(history);
+        }
+
         private void OnEnergyFluctuation(object? sender, ElapsedEventArgs e)
         {
             _energyGeneration = Math.Round((_energyGeneration + 0.1) % 5, 2);
-        }
+            if (_generationHistory.Count >= MaxHistorySize)
+            {
+                _generationHistory.Dequeue();
+            }
+
+            // Add the new value
+            DateTime now = DateTime.Now; // Get the current date and time
+            DateTime nowWithoutSecondsAndMilliseconds = new DateTime(now.Ticks - (now.Ticks % TimeSpan.TicksPerMinute), now.Kind);
+
+            _generationHistory.Enqueue(new EnergyTimestamp { Time = nowWithoutSecondsAndMilliseconds, Amount = _energyGeneration });
+
+            }
     }
 }

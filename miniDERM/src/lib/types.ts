@@ -17,8 +17,15 @@ export interface EnergyResource {
     Owner: string;
     EnergyGeneration: number;
 }
+
+export interface EnergyTimestamp {
+    Time: string;
+    Amount: number;
+}
+
 export interface EnergyResourcesInfo {
     Resources: EnergyResource[];
+    EnergyHistory: EnergyTimestamp[];
     CurrentOutput: number;
     TotalGeneration: number;
 }

@@ -177,10 +177,11 @@ public class OperatorController : ControllerBase
         while (webSocket.State == WebSocketState.Open)
         {
             var resources = await operatorGrain.GetEnergyResourceInfo();
-
+            var energyHistory = await operatorGrain.GetEnergyHistory();
             var resourceInfo = new EnergyResourceInfo()
             {
                 Resources = resources,
+                EnergyHistory = energyHistory,
                 CurrentOutput = GetCurrentOutput(resources),
                 TotalGeneration = GetTotalGeneration(resources)
             };

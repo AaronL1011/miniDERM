@@ -11,6 +11,7 @@
     socket.addEventListener("message", (event) => {
       const newState = JSON.parse(event.data) as EnergyResourcesInfo;
       $dashboard.resources = newState.Resources;
+      $dashboard.energyHistory = newState.EnergyHistory;
       $dashboard.currentOutput = newState.CurrentOutput;
       $dashboard.totalGeneration = newState.TotalGeneration;
     });

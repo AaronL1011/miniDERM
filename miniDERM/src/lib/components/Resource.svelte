@@ -16,15 +16,29 @@
 <div class="resource">
     <div class="resource-header">
         <h3>{resource.Name}</h3>
-        <span>
+        <span class="nowrap">
             <button class="delete-resource" title="Edit">🖊️</button>
             <button class="delete-resource" title="Delete" on:click={handleDeleteResource}>❌</button>
         </span>
     </div>
-    <h5>Generating</h5>
-    <p>{resource.EnergyGeneration}kW/h</p>
-    <h5>Current Output</h5>
-    <p>{resource.EnergyOutput}%</p>
+    <div class="stat-container">
+        <span>
+            <h5>Status</h5>
+            <p>{resource.Status}</p>
+        </span>
+        <span>
+            <h5>Generating</h5>
+            <p>{resource.EnergyGeneration}kW/h</p>
+        </span>
+        <span>
+            <h5>Current Output</h5>
+            <p>{resource.EnergyOutput}%</p>
+        </span>
+        <span>
+            <h5>Connected to Grid</h5>
+            <p>{resource.IsConnectedToGrid ? "Yes" : "No"}</p>
+        </span>
+    </div>
 </div>
 
 <style>
@@ -34,7 +48,7 @@
         border-radius: 16px;
         padding: 2em;
         box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
-        min-width: fit-content;
+        width: 300px;
     }
 
     .resource-header {
@@ -51,5 +65,16 @@
     h3, h5, p {
         margin: 0;
         margin-bottom: 1em;
+    }
+
+    .nowrap {
+        min-width: fit-content;
+    }
+
+    .stat-container {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        gap: 1rem;
     }
 </style>

@@ -46,4 +46,26 @@ public class OperatorGrain : Grain, IOperatorGrain
 
             return resourceList;
         }
+
+        public async Task<EnergyTimestamp[]> GetEnergyHistory()
+        {
+            var result = new Dictionary<DateTime, double>();
+
+                foreach (var r in _resources)
+                {
+                    var energyHistory = await r.Value.GetEnergyGenerationHistory();
+                    foreach (var history in energyHistory)
+                    {
+                        if (result.TryGetValue(history.Time, out var value)) {
+                            result[history.Time] = Math.Round(value + history.Amount, 2);
+                        }
+                        else
+                        {
+                            result.Add(history.Time, history.Amount);
+                        }
+                    }
+                }
+
+                return result.Select(r => new EnergyTimestamp() { Time = r.Key, Amount = r.Value}).ToArray();
+        }
     }

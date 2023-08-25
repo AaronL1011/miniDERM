@@ -6,7 +6,7 @@ namespace DERMS.Grains
 {
     public class EnergyResourceGrain : Grain, IEnergyResourceGrain
     {
-        const int MaxHistorySize = 51;
+        const int MaxHistorySize = 720; // Logging every 5 seconds, 12 logs per minute, 60 minutes worth of logs = 720 EnergyTimestamp objects == ~30KB max size;
         private bool _isActive;
         private bool _isConnectedToGrid;
         private double _energyOutput;

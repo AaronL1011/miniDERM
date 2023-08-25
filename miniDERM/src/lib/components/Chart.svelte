@@ -1,10 +1,11 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import Chart from "chart.js/auto";
+  import 'chartjs-adapter-dayjs-4/dist/chartjs-adapter-dayjs-4.esm';
   import type { ChartData, ChartOptions } from "chart.js/auto";
   import { dashboard } from "$lib/store";
 
-  let chart: Chart;
+  let chart: Chart<"line", {x: string, y: number}[]>;
 
   let data = {
     datasets: [
@@ -28,6 +29,12 @@
       y: {
         min: 0,
       },
+      x: {
+        type: "time",
+        time: {
+            unit: "minute"
+        }
+      }
     },
   }; // Define the type for options
 
@@ -37,7 +44,7 @@
     if (ctx) {
       dashboard.subscribe((dash) => {
         if (chart) {
-          chart.data = {
+          (chart).data = {
             datasets: [
               {
                 borderColor: "#43A047",
@@ -52,7 +59,7 @@
           };
           chart.update(); // Update the chart with new data
         } else {
-          chart = new Chart(ctx, {
+          chart = new Chart<"line", {x: string, y: number}[]>(ctx, {
             type: "line",
             data: data,
             options: options,

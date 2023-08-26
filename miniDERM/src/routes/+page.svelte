@@ -12,6 +12,7 @@
       const newState = JSON.parse(event.data) as EnergyResourcesInfo;
       $dashboard.resources = newState.Resources;
       $dashboard.energyHistory = newState.EnergyHistory;
+      $dashboard.outputHistory = newState.OutputHistory;
       $dashboard.currentOutput = newState.CurrentOutput;
       $dashboard.totalGeneration = newState.TotalGeneration;
     });
@@ -22,14 +23,14 @@
   });
 </script>
 
-<h1>Dashboard</h1>
-<h2 class="section-header">Energy Breakdown</h2>
+<h2>Dashboard</h2>
+<h3 class="section-header">Energy Breakdown</h3>
 <EnergyBreakdown />
-<h2 class="section-header">Resources</h2>
+<h3 class="section-header">Resources</h3>
 <Resources />
 
 <style>
-  h1 {
+  h2 {
     margin: 0;
   }
 

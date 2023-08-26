@@ -26,6 +26,7 @@ export interface EnergyTimestamp {
 export interface EnergyResourcesInfo {
     Resources: EnergyResource[];
     EnergyHistory: EnergyTimestamp[];
+    OutputHistory: EnergyTimestamp[];
     CurrentOutput: number;
     TotalGeneration: number;
 }

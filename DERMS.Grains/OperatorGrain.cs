@@ -49,14 +49,26 @@ public class OperatorGrain : Grain, IOperatorGrain
 
     public async Task<EnergyTimestamp[]> GetEnergyHistory()
     {
+        return await GetHistory(async (r) => await r.GetEnergyGenerationHistory());
+    }
+
+    public async Task<EnergyTimestamp[]> GetOutputHistory()
+    {
+        return await GetHistory(async (r) => await r.GetEnergyOutputHistory());
+    }
+
+    public delegate Task<EnergyTimestamp[]> GetHistoryDelegate(IEnergyResourceGrain resource);
+
+    public async Task<EnergyTimestamp[]> GetHistory(GetHistoryDelegate getHistoryMethod)
+    {
         var result = new Dictionary<DateTime, Dictionary<string, Tuple<double, int>>>();  // Outer: Time, Inner: Resource, Tuple: Sum, Count
 
         foreach (var r in _resources)
         {
             var resourceName = r.Key.ToString();  // Assuming resource name is the key
-            var energyHistory = await r.Value.GetEnergyGenerationHistory();
+            var historyData = await getHistoryMethod(r.Value);
 
-            foreach (var history in energyHistory)
+            foreach (var history in historyData)
             {
                 if (result.TryGetValue(history.Time, out var innerDict))
                 {
@@ -74,20 +86,20 @@ public class OperatorGrain : Grain, IOperatorGrain
                 else
                 {
                     var newInnerDict = new Dictionary<string, Tuple<double, int>>
-                    {
-                        { resourceName, Tuple.Create(history.Amount, 1) }
-                    };
+                {
+                    { resourceName, Tuple.Create(history.Amount, 1) }
+                };
 
                     result.Add(history.Time, newInnerDict);
                 }
             }
         }
 
-        return result.Select(r => 
-            new EnergyTimestamp() { 
-                Time = r.Key, 
-                Amount = Math.Round(r.Value.Values.Sum(inner => inner.Item1 / inner.Item2), 2) 
+        return result.Select(r =>
+            new EnergyTimestamp()
+            {
+                Time = r.Key,
+                Amount = Math.Round(r.Value.Values.Sum(inner => inner.Item1 / inner.Item2), 2)
             }).ToArray();
     }
-
 }

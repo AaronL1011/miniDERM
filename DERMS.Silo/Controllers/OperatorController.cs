@@ -13,11 +13,13 @@ public class OperatorController : ControllerBase
 {
     private readonly ILogger<OperatorController> _logger;
     private readonly IGrainFactory _grains;
+    private readonly CancellationToken _cancellationToken;
 
-    public OperatorController(ILogger<OperatorController> logger, IGrainFactory grains)
+    public OperatorController(IHostApplicationLifetime appLifetime, ILogger<OperatorController> logger, IGrainFactory grains)
     {
         _logger = logger;
         _grains = grains;
+        _cancellationToken = appLifetime.ApplicationStopping;
     }
 
     [HttpGet("{operatorName}/ws")]
@@ -173,24 +175,32 @@ public class OperatorController : ControllerBase
     private async Task SendEnergyResourceInfo(WebSocket webSocket, string operatorId)
     {
         var operatorGrain = _grains.GetGrain<IOperatorGrain>(operatorId);
-
-        while (webSocket.State == WebSocketState.Open)
+        try
         {
-            var resources = await operatorGrain.GetEnergyResourceInfo();
-            var energyHistory = await operatorGrain.GetEnergyHistory();
-            var resourceInfo = new EnergyResourceInfo()
+            while (webSocket.State == WebSocketState.Open)
             {
-                Resources = resources,
-                EnergyHistory = energyHistory,
-                CurrentOutput = GetCurrentOutput(resources),
-                TotalGeneration = GetTotalGeneration(resources)
-            };
-            var jsonString = JsonSerializer.Serialize(resourceInfo);
-            var buffer = Encoding.UTF8.GetBytes(jsonString);
+                var resources = await operatorGrain.GetEnergyResourceInfo();
+                var energyHistory = await operatorGrain.GetEnergyHistory();
+                var outputHistory = await operatorGrain.GetOutputHistory();
+                var resourceInfo = new EnergyResourceInfo()
+                {
+                    Resources = resources,
+                    EnergyHistory = energyHistory,
+                    OutputHistory = outputHistory,
+                    CurrentOutput = GetCurrentOutput(resources),
+                    TotalGeneration = GetTotalGeneration(resources)
+                };
+                var jsonString = JsonSerializer.Serialize(resourceInfo);
+                var buffer = Encoding.UTF8.GetBytes(jsonString);
 
-            await webSocket.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Text, true, CancellationToken.None);
+                await webSocket.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Text, true, _cancellationToken);
 
-            await Task.Delay(TimeSpan.FromSeconds(5));
+                await Task.Delay(TimeSpan.FromSeconds(5));
+            }
+        }
+        catch (TaskCanceledException)
+        {
+            _logger.LogInformation("Websocket connection closed due to application shutdown.");
         }
     }
 

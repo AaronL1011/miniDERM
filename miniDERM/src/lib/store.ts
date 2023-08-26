@@ -10,6 +10,7 @@ export const session = writable({
 interface DashboardStore {
     resources: EnergyResource[],
     energyHistory: EnergyTimestamp[],
+    outputHistory: EnergyTimestamp[],
     currentOutput: number,
     totalGeneration: number
 }
@@ -17,6 +18,7 @@ interface DashboardStore {
 export const dashboard = writable<DashboardStore>({
     resources: [],
     energyHistory: [],
+    outputHistory: [],
     currentOutput: 0,
     totalGeneration: 0,
 })

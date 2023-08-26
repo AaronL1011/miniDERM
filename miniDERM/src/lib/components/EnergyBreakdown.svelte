@@ -8,11 +8,11 @@
     <div class="stat-summary">
         <div>
             <h4>Current Output</h4>
-            <p>{$dashboard.currentOutput} kW/h</p>
+            <p>{$dashboard.currentOutput} kW</p>
         </div>
         <div>
             <h4>Total Generation</h4>
-            <p>{$dashboard.totalGeneration} kW/h</p>
+            <p>{$dashboard.totalGeneration} kW</p>
         </div>
     </div>
     <Chart />

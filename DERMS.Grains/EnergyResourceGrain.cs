@@ -15,6 +15,7 @@ namespace DERMS.Grains
         private string _owner = String.Empty;
         private string _name = String.Empty;
         private readonly Queue<EnergyTimestamp> _generationHistory = new Queue<EnergyTimestamp>(MaxHistorySize);
+        private readonly Queue<EnergyTimestamp> _outputHistory = new Queue<EnergyTimestamp>(MaxHistorySize);
 
         public Task Activate()
         {
@@ -30,6 +31,7 @@ namespace DERMS.Grains
             _isActive = false;
             _energyFluctuationTimer?.Stop();
             _energyFluctuationTimer?.Dispose();
+            _energyFluctuationTimer = null;
             _energyGeneration = 0;
             return Task.CompletedTask;
         }
@@ -113,19 +115,30 @@ namespace DERMS.Grains
             return Task.FromResult(history);
         }
 
+        public Task<EnergyTimestamp[]> GetEnergyOutputHistory()
+        {
+            var history = _outputHistory.ToArray();
+            return Task.FromResult(history);
+        }
+
         private void OnEnergyFluctuation(object? sender, ElapsedEventArgs e)
         {
             _energyGeneration = Math.Round((_energyGeneration + 0.1) % 5, 2);
+            DateTime now = DateTime.Now; // Get the current date and time
+            DateTime nowWithoutSecondsAndMilliseconds = new DateTime(now.Ticks - (now.Ticks % TimeSpan.TicksPerMinute), now.Kind);
+            var output = _isConnectedToGrid ? (_energyOutput / 100) * _energyGeneration : 0;
+
             if (_generationHistory.Count >= MaxHistorySize)
             {
                 _generationHistory.Dequeue();
             }
-
-            // Add the new value
-            DateTime now = DateTime.Now; // Get the current date and time
-            DateTime nowWithoutSecondsAndMilliseconds = new DateTime(now.Ticks - (now.Ticks % TimeSpan.TicksPerMinute), now.Kind);
+            if (_outputHistory.Count >= MaxHistorySize)
+            {
+                _outputHistory.Dequeue();
+            }
 
             _generationHistory.Enqueue(new EnergyTimestamp { Time = nowWithoutSecondsAndMilliseconds, Amount = _energyGeneration });
+            _outputHistory.Enqueue(new EnergyTimestamp { Time = nowWithoutSecondsAndMilliseconds, Amount = output });
 
             }
     }

@@ -190,7 +190,6 @@ public class OperatorController : ControllerBase
 
             await webSocket.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Text, true, CancellationToken.None);
 
-            // Wait for 5 seconds before sending the next update
             await Task.Delay(TimeSpan.FromSeconds(5));
         }
     }

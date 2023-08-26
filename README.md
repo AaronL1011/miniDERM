@@ -30,7 +30,7 @@ When built, the app can be run by executing:
 
 `> docker run -p 6001:6001 miniderm`
 
-To access the Web UI you can visit [http://0.0.0.0:6001/index.html](http://0.0.0.0:6001/index.html) (i'll make it better i promise).
+To access the Web UI you can visit [http://localhost:6001/index.html](http://localhost:6001/index.html) (i'll make it better i promise).
 
 # System Design
 

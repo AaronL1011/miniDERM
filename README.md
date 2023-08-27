@@ -18,7 +18,10 @@ The front-end is a statically generated Svelte app, the index.html is served by 
 
 # Running miniDERM
 
+## Option 1: Build it Yourself
+
 ### Build and Tag the application
+
 Clone this project and `cd` into the root of the repo. Execute the following in your console:
 
 ```
@@ -35,6 +38,16 @@ When built, the app can be run by executing:
 ```
 
 To access the Web UI you can visit [http://localhost:5000](http://localhost:5000).
+
+## Option 2: Pull Image from GHCR
+
+If you'd prefer to not build the image from source, versions of miniderms live in GitHub Container Registry.
+
+You should be able to run the image by executing:
+
+```
+> docker run -p 5000:5000 ghcr.io/aaronl1011/miniderm:<version>
+```
 
 ## Requirements
 

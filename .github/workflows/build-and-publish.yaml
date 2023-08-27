@@ -1,40 +1,43 @@
-name: Build and Publish Docker Image
+name: Build and Publish Docker Image to GHCR
 
 on:
   push:
     branches:
       - main
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+env:
+  IMAGE_NAME: miniderm
 
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v3
 
     - name: Setup Node.js
       uses: actions/setup-node@v2
       with:
         node-version: '18'
 
-    - name: Semantic Release
-      run: npx semantic-release
+    - name: Install semantic-release
+      run: npm install semantic-release@latest
+
+    - name: Run semantic-release
+      id: semantic
+      run: npx semantic-release --branches=${{ github.ref }} --dry-run=false
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Get the version
-      run: echo "RELEASE_VERSION=$(npx -c 'echo "$npm_package_version"')" >> $GITHUB_ENV
-
-    - name: Debug
-      run: echo "RELEASE_VERSION=${{ env.RELEASE_VERSION }}"
-
-    - name: Login to GitHub Container Registry
-      run: echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-
-    - name: Build and Push Docker Image
+    - name: Build and Push Docker image
       uses: docker/build-push-action@v2
       with:
         context: .
         push: true
-        tags: ghcr.io/${{ github.repository }}:${{ env.RELEASE_VERSION }}
+        tags: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ steps.semantic.outputs.new_release_version }}
+        file: ./Dockerfile
+
+    - name: Update the version in the project
+      run: |
+        # Logic to update the version in your .NET project files
+        echo "New version is: ${{ steps.semantic.outputs.new_release_version }}"

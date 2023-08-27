@@ -24,9 +24,9 @@ jobs:
       run: npm install semantic-release@latest
 
     - name: Run semantic-release and capture version
-      id: semantic
       run: |
-        NEW_VERSION=$(npx semantic-release --dry-run=false | grep "Published release" | awk '{print $3}')
+        OUTPUT=$(npx semantic-release --dry-run=false)
+        NEW_VERSION=$(echo "$OUTPUT" | grep "Published release" | awk '{print $4}')
         echo "New version is $NEW_VERSION"
         echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
       env:

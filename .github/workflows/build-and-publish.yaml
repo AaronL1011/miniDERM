@@ -42,4 +42,4 @@ jobs:
 
     - name: Update the version in the project
       run: |
-        echo "New version is: ${{ env.NEW_VERSION }}"
+        echo "New version is now: ${{ env.NEW_VERSION }}"

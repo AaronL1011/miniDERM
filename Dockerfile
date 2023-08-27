@@ -7,9 +7,8 @@ RUN dotnet restore && \
 
 FROM node:16 AS build-svelte
 WORKDIR /app
-COPY miniDERM/package*.json ./
-RUN npm install
 COPY miniDERM ./
+RUN npm install
 RUN npm run build
 
 FROM mcr.microsoft.com/dotnet/aspnet:7.0-alpine AS runtime

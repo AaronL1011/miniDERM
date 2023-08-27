@@ -19,7 +19,7 @@ jobs:
         semantic_version: 17
         branches: main
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
     - name: Get the version
       run: echo "RELEASE_VERSION=$(cat ./VERSION)" >> $GITHUB_ENV

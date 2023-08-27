@@ -26,6 +26,9 @@ jobs:
     - name: Get the version
       run: echo "RELEASE_VERSION=$(npx -c 'echo "$npm_package_version"')" >> $GITHUB_ENV
 
+    - name: Debug
+      run: echo "RELEASE_VERSION=${{ env.RELEASE_VERSION }}"
+
     - name: Login to GitHub Container Registry
       run: echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 

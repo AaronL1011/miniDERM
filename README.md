@@ -12,7 +12,7 @@ This project is quite light, it currently uses:
 - ChartJS
 - Docker
 
-The back-end server is hosting an Orleans Silo, which manages Grains for your Operator session and all the Energy Resources attached to an Operator.
+The back-end server is hosting an Orleans Silo and does not persist data.
 
 The front-end is a statically generated Svelte app, the index.html is served by the .NET web API.
 
@@ -21,28 +21,26 @@ The front-end is a statically generated Svelte app, the index.html is served by 
 ### Build and Tag the application
 Clone this project and `cd` into the root of the repo. Execute the following in your console:
 
-`> docker build -t miniderm .`
+```
+> docker build -t miniderm .
+```
 
 This will build the front and back halves of the application and combine them into a single image.
 
 ### Start the application
 When built, the app can be run by executing:
 
-`> docker run -p 6001:6001 miniderm`
+```
+> docker run -p 5000:5000 miniderm
+```
 
-To access the Web UI you can visit [http://localhost:6001/index.html](http://localhost:6001/index.html) (i'll make it better i promise).
-
-# System Design
-
-The current implementation of this system is **very** primitive. No HTTPS, authentication and authorization is non-existent, there's no persistence between restarts, and "shutting down" is more-so a process of slowly crashing to death... but this was intentional. To deliver something that looks and feels tidy and well put-together, you need to keep your scope tight.
-
-One day I would love for this to evolve into an open-source project; free to use software to orchestrate and monitor energy production and storage resources in off-grid community/network environments. Very rebel, no clue if feasible, but the dream is nice.
+To access the Web UI you can visit [http://localhost:5000](http://localhost:5000).
 
 ## Requirements
 
 ### Functional
 
-- As a user, I want to be able to see the current status of my energy resources, so that I can understand how much energy I have in storage.
+- As a user, I want to be able to see the current status of my energy generation, so that I can understand how much energy I have.
 - As a user, I want to see the current energy output of my resources, so that I can understand how much energy is being sent back to the grid.
 - As a user, I want to be able to set the current energy output of my resources, so that I can control how much energy I am discharging into the grid.
 - As a user, I want to be able to connect and disconnect my energy resources from the grid, so that I can control when my resources are discharging into the grid.

@@ -2,10 +2,6 @@ using System.Net;
 using Orleans.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.Listen(IPAddress.Any, 6001); // Listen on port 6001 for HTTP
-});
 
 // Add services to the container.
 builder.Host.UseOrleans(siloBuilder =>
@@ -52,5 +48,6 @@ app.UseAuthorization();
 app.UseWebSockets();
 
 app.MapControllers();
+app.MapFallbackToFile("index.html");
 
 app.Run();

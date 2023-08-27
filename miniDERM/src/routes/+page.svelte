@@ -3,24 +3,32 @@
   import Resources from "$lib/components/Resources.svelte";
   import { dashboard, session } from "$lib/store";
   import type { EnergyResourcesInfo } from "$lib/types";
-  import { onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
+
+  let socket: WebSocket;
+
+  const onMessage = (e: MessageEvent<string>) => {
+    const newState = JSON.parse(e.data) as EnergyResourcesInfo;
+    $dashboard.resources = newState.Resources;
+    $dashboard.energyHistory = newState.EnergyHistory;
+    $dashboard.outputHistory = newState.OutputHistory;
+    $dashboard.currentOutput = newState.CurrentOutput;
+    $dashboard.totalGeneration = newState.TotalGeneration;
+  }
 
   onMount(() => {
-    const socket = new WebSocket(`ws://localhost:6001/Operator/${$session.operatorName}/ws`);
+    const wsHost = window.location.hostname;
+    const wsPort = window.location.port;
+    const wsUrl = `ws://${wsHost}:${wsPort}/Operator/${$session.operatorName}/ws`;
 
-    socket.addEventListener("message", (event) => {
-      const newState = JSON.parse(event.data) as EnergyResourcesInfo;
-      $dashboard.resources = newState.Resources;
-      $dashboard.energyHistory = newState.EnergyHistory;
-      $dashboard.outputHistory = newState.OutputHistory;
-      $dashboard.currentOutput = newState.CurrentOutput;
-      $dashboard.totalGeneration = newState.TotalGeneration;
-    });
-
-    return () => {
-        socket.close()
-    }
+    socket = new WebSocket(wsUrl);
+    socket.addEventListener("message", onMessage);
   });
+
+  onDestroy(() => {
+    socket.close()
+    socket.removeEventListener("message", onMessage)
+  })
 </script>
 
 <h2>Dashboard</h2>

@@ -39,9 +39,11 @@ When built, the app can be run by executing:
 
 To access the Web UI you can visit [http://localhost:5000](http://localhost:5000).
 
-## Option 2: Pull Image from GHCR
+## Option 2: Pull Image from GitHub Container Registry
 
 If you'd prefer to not build the image from source, versions of `miniderm` live in the GitHub Container Registry.
+
+### Run with Docker
 
 You should be able to run the latest image by executing:
 
@@ -54,7 +56,7 @@ Or specify a version with:
 > docker run -p 5000:5000 ghcr.io/aaronl1011/miniderm:<version>
 ```
 
-## Requirements
+# Requirements
 
 ### Functional
 
@@ -71,7 +73,7 @@ Or specify a version with:
 
 
 
-## Domain Entities
+# Domain Entities
 
 ### Operator
 
@@ -111,7 +113,7 @@ public interface IEnergyResourceGrain : IGrainWithGuidKey
 
 ```
 
-## Scope
+# Scope
 
 **Authentication & Authorization:** We can assume we will be given a value in all requests related to an Operator name, I dont want to worry about a true auth implementation for this project as it could be integrated later (ie sourcing operator identity & scoping access with JWTs).
 

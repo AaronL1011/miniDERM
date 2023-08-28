@@ -28,6 +28,10 @@ jobs:
         OUTPUT=$(npx semantic-release --dry-run=false)
         NEW_VERSION=$(echo "$OUTPUT" | grep -o 'Published release [0-9.]*' | awk '{print $3}')
         echo "New version is $NEW_VERSION"
+        if [ -z "$NEW_VERSION" ]; then
+          echo "NEW_VERSION is empty. Stopping the workflow."
+          exit 1
+        fi
         echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

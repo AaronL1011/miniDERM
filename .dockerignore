@@ -2,4 +2,10 @@ bin
 obj
 node_modules
 .svelte-kit
+.gitignore
+.dockerignore
+Dockerfile
+release.config.js
+README.md
+miniDERM.png
 build

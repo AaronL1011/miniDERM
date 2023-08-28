@@ -47,7 +47,9 @@ jobs:
       with:
         context: .
         push: true
-        tags: ghcr.io/${{ env.REPO_OWNER }}/${{ env.IMAGE_NAME }}:${{ env.NEW_VERSION }}
+        tags: |
+          ghcr.io/${{ env.REPO_OWNER }}/${{ env.IMAGE_NAME }}:${{ env.NEW_VERSION }}
+          ghcr.io/${{ env.REPO_OWNER }}/${{ env.IMAGE_NAME }}:latest
         file: ./Dockerfile
 
     - name: Update the version in the project

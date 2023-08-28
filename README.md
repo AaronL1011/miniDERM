@@ -41,10 +41,15 @@ To access the Web UI you can visit [http://localhost:5000](http://localhost:5000
 
 ## Option 2: Pull Image from GHCR
 
-If you'd prefer to not build the image from source, versions of miniderms live in GitHub Container Registry.
+If you'd prefer to not build the image from source, versions of `miniderm` live in the GitHub Container Registry.
 
-You should be able to run the image by executing:
+You should be able to run the latest image by executing:
 
+```
+> docker run -p 5000:5000 ghcr.io/aaronl1011/miniderm
+```
+
+Or specify a version with:
 ```
 > docker run -p 5000:5000 ghcr.io/aaronl1011/miniderm:<version>
 ```

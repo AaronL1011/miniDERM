@@ -25,7 +25,7 @@ The front-end is a statically generated Svelte app, the index.html is served by 
 Clone this project and `cd` into the root of the repo. Execute the following in your console:
 
 ```
-> docker build -t miniderm .
+docker build -t miniderm .
 ```
 
 This will build the front and back halves of the application and combine them into a single image.
@@ -34,7 +34,7 @@ This will build the front and back halves of the application and combine them in
 When built, the app can be run by executing:
 
 ```
-> docker run -p 5000:5000 miniderm
+docker run -p 5000:5000 miniderm
 ```
 
 To access the Web UI you can visit [http://localhost:5000](http://localhost:5000).
@@ -48,12 +48,12 @@ If you'd prefer to not build the image from source, versions of `miniderm` live 
 You should be able to run the latest image by executing:
 
 ```
-> docker run -p 5000:5000 ghcr.io/aaronl1011/miniderm
+docker run -p 5000:5000 ghcr.io/aaronl1011/miniderm
 ```
 
 Or specify a version with:
 ```
-> docker run -p 5000:5000 ghcr.io/aaronl1011/miniderm:<version>
+docker run -p 5000:5000 ghcr.io/aaronl1011/miniderm:<version>
 ```
 
 # Requirements

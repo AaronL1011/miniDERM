@@ -1,6 +1,7 @@
 export type CreateEnergyResource = {
     name: string;
     energyOutput: number;
+    timeZone: string;
 }
 
 export type SetEnergyOutput = {

@@ -70,6 +70,7 @@ public class OperatorController : ControllerBase
         await resourceGrain.SetOwner(operatorName);
         await resourceGrain.SetName(request.Name);
         await resourceGrain.SetEnergyOutput(request.EnergyOutput);
+        await resourceGrain.SetTimeZone(request.TimeZone);
         await resourceGrain.Activate();
         
         return Ok();
@@ -207,7 +208,7 @@ public class OperatorController : ControllerBase
     private double GetCurrentOutput(ResourceInfo[] resources)
     {
         var total = resources.Aggregate(0.0, (sum, current) => {
-            var currentResourceOutput = (current.EnergyOutput / 100) * current.EnergyGeneration;
+            var currentResourceOutput = current.IsConnectedToGrid ? (current.EnergyOutput / 100) * current.EnergyGeneration : 0;
             sum += currentResourceOutput;
             return sum;
         });

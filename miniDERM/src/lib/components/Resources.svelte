@@ -17,8 +17,13 @@
         // Access form values using the name attributes of the form elements
         const resourceName = formData.get('resourceName');
         const energyOutput = formData.get('energyOutput');
+        if (!resourceName || !energyOutput) return;
         try {
-            await createResource($session.operatorName, { name: resourceName, energyOutput })
+            await createResource($session.operatorName, {
+                name: resourceName.toString(),
+                energyOutput: Number(energyOutput.toString()),
+                timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
+            })
         } catch (error) {
             console.log(error);
         }

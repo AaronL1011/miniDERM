@@ -139,25 +139,14 @@ namespace DERMS.Grains
 
         private void OnEnergyTick(object? sender, ElapsedEventArgs e)
         {
-            DateTime now = DateTime.Now; // Get the current date and time
+            DateTime now = DateTime.Now;
 
             SimulateEnergyGenerationForLocalTime(now);
 
-            DateTime nowWithoutSecondsAndMilliseconds = new DateTime(now.Ticks - (now.Ticks % TimeSpan.TicksPerMinute), now.Kind);
-            var output = _isConnectedToGrid ? (_energyOutput / 100) * _energyGeneration : 0;
-
-            if (_generationHistory.Count >= MaxHistorySize)
-            {
-                _generationHistory.Dequeue();
-            }
-            if (_outputHistory.Count >= MaxHistorySize)
-            {
-                _outputHistory.Dequeue();
-            }
-
-            _generationHistory.Enqueue(new EnergyTimestamp { Time = nowWithoutSecondsAndMilliseconds, Amount = _energyGeneration });
-            _outputHistory.Enqueue(new EnergyTimestamp { Time = nowWithoutSecondsAndMilliseconds, Amount = output });
-
+            DateTime currentTimeToTheMinute = new DateTime(now.Ticks - (now.Ticks % TimeSpan.TicksPerMinute), now.Kind);
+            var energyOutput = _isConnectedToGrid ? (_energyOutput / 100) * _energyGeneration : 0;
+            
+            LogEnergyHistory(currentTimeToTheMinute, _energyGeneration, energyOutput);
         }
 
         private void SimulateEnergyGenerationForLocalTime(DateTime now)
@@ -183,6 +172,21 @@ namespace DERMS.Grains
 
 
             _energyGeneration = Math.Clamp(Math.Round(gaussianCurveValue + fluctuation, 2), 0, 5);
+        }
+
+        private void LogEnergyHistory(DateTime currentMinute, double generation, double output)
+        {
+            if (_generationHistory.Count >= MaxHistorySize)
+            {
+                _generationHistory.Dequeue();
+            }
+            if (_outputHistory.Count >= MaxHistorySize)
+            {
+                _outputHistory.Dequeue();
+            }
+
+            _generationHistory.Enqueue(new EnergyTimestamp { Time = currentMinute, Amount = _energyGeneration });
+            _outputHistory.Enqueue(new EnergyTimestamp { Time = currentMinute, Amount = output });
         }
     }
 }

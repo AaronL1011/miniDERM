@@ -20,5 +20,6 @@ namespace DERMS.Interfaces
         Task SetName(string name);
         Task<string> GetName();
         Task<ResourceInfo> ToDTO();
+        Task SetTimeZone(string timeZoneId);
     }
 }

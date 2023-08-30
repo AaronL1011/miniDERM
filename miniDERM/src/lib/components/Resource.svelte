@@ -34,7 +34,6 @@
     }
   };
 
-  const handleSave = async () => {};
 </script>
 
 <div class="resource">

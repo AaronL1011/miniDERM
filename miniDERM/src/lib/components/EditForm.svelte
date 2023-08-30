@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { setEnergyOutput } from "$lib/api";
+  import { setEnergyOutput, setResourceName } from "$lib/api";
   import type { EnergyResource } from "$lib/types";
 
     export let resource: EnergyResource
@@ -31,26 +31,30 @@
             console.error("Unable to set Energy Output")
         }    
     }
+
+    const saveName = async () => {
+        if (name === resource.Name) return;
+
+        try {
+            await setResourceName(resource.Owner, { id: resource.Id, name: name })
+        } catch (error) {
+            console.error("Unable to set Resource Name")
+        }    
+    }
+
+    
 </script>
 
 <div class="edit-form">
     <span class="resource-field">
         <label for="name">Name</label>
-        <input type="text" value={name} on:input={handleNameUpdate} /><button>Save</button>
+        <input type="text" value={name} on:input={handleNameUpdate} /><button on:click={saveName}>Save</button>
     </span>
     <span class="resource-field">
         <label for="output">Output</label>
         <input id="output" type="number" max="100" min="0" value={output} on:input={handleOutputUpdate}/><button on:click={saveOutput}>Save</button>
     </span>
-    <span class="resource-field">
-        <label for="status">Status</label>
-        <select id="status" value={status} on:select={handleStatusUpdate}>
-            <option value="Active">Active</option>
-            <option value="Inactive">Inactive</option>
-        </select>
-        <button>Save</button>
-    </span>
-    <button on:click={onClose}>Cancel</button>
+    <button on:click={onClose}>Back</button>
 </div>
 
 <style>

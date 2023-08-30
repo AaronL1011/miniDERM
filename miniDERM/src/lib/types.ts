@@ -9,6 +9,11 @@ export type SetEnergyOutput = {
     energyOutput: number;
 }
 
+export type SetResourceName = {
+    id: string;
+    name: string;
+}
+
 export interface EnergyResource {
     Id: string;
     Name: string;

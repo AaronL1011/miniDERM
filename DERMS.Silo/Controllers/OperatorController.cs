@@ -173,6 +173,32 @@ public class OperatorController : ControllerBase
         return Ok();
     }
 
+    [HttpPost]
+    [Route("{operatorName}/setResourceName")]
+    public async Task<IActionResult> SetEnergyResourceName([FromBody] SetResourceName request, string operatorName)
+    {
+        if (!Guid.TryParse(request.Id, out var resourceId))
+        {
+            return BadRequest("Invalid resource Id");
+        }
+        
+        var operatorGrain = _grains.GetGrain<IOperatorGrain>(operatorName);
+        if (operatorGrain == null)
+        {
+            return BadRequest("Failed to get Operator");
+        }
+
+        var resourceGrain = await operatorGrain.GetEnergyResource(resourceId);
+        if (resourceGrain == null)
+        {
+            return BadRequest("Failed to get Energy Resource");
+        }
+
+        await resourceGrain.SetName(request.Name);
+        
+        return Ok();
+    }
+
     private async Task SendEnergyResourceInfo(WebSocket webSocket, string operatorId)
     {
         var operatorGrain = _grains.GetGrain<IOperatorGrain>(operatorId);
